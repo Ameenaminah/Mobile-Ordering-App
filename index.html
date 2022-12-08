@@ -11,8 +11,23 @@
       href="https://fonts.googleapis.com/css2?family=Smythe&display=swap"
       rel="stylesheet"
     />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Fonts awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+      integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <title>Ordering App</title>
     <link rel="stylesheet" href="index.css" />
-    <title>Document</title>
   </head>
   <body>
     <div class="container">
@@ -22,68 +37,60 @@
           <p class="intro-subtitle">The best burgers and pizzas in town.</p>
         </div>
       </header>
-    </div>
-    <main>
-      <div class="menu" id="menu"></div>
+      <main id="main">
+        <div class="menu" id="menu">
+          <!-- Main content / menu -->
+        </div>
+        <div class="order-container hidden" id="order-container">
+          <div class="order" id="order">
+            <h3 class="order-title">Your order</h3>
+            <div id="ordered-items">
+              <!-- Order summary here -->
+            </div>
 
-      <div class="order-container">
-        <h2 class="order-title">Your Order</h2>
-        <!-- <div class="order-list" id="order-list"> -->
-        <!-- <div>
-            <h2 class="item-title">Pizza <span>remove</span></h2>
-          </div>
-          <div>
-            <p class="item-price">$20</p>
-          </div> -->
-        <ul id="order-list">
-          <!-- <li class="order-list" id="order-list">
-            <h2 class="item-title">Pizza <span>remove</span></h2>
-            <p class="item-price">$20</p>
-          </li> -->
-        </ul>
-        <!-- </div> -->
-
-        <div class="order-list order-total">
-          <div>
-            <h2 class="item-title item-total">Total price:</h2>
-          </div>
-          <div>
-            <p class="item-price">$20</p>
+            <div class="order-list order-total">
+              <h2 class="item-title item-total">Total price:</h2>
+              <p class="item-price" id="total-price"></p>
+            </div>
+            <button class="btn purchase-btn">Complete order</button>
           </div>
         </div>
-        <button class="btn purchase-btn">Complete order</button>
+      </main>
+      <div class="modal-container">
+        <h2 class="modal-title">Enter card details</h2>
+        <form action="">
+          <input
+            type="text"
+            name="name"
+            placeholder="Enter your name"
+            aria-label="fullname"
+            required
+          />
+          <input
+            class="cc-number"
+            type="tel"
+            name="card-number"
+            minlength="16"
+            maxlength="16"
+            placeholder="Enter card number"
+            aria-label="creditNumber"
+            required
+          />
+          <input
+            name="cc-cvc"
+            class="cvv"
+            type="tel"
+            length="3"
+            minlength="3"
+            maxlength="3"
+            placeholder="Enter CVV"
+            aria-label="cvvNumber"
+            required
+          />
+          <button type="submit" class="btn pay-btn">Pay</button>
+        </form>
       </div>
-    </main>
-    <div class="modal-container">
-      <h2 class="modal-title">Enter card details</h2>
-      <form action="">
-        <input
-          type="text"
-          placeholder="Enter your name"
-          aria-label="fullname"
-        />
-        <input
-          name="credit-number"
-          class="cc-number"
-          type="tel"
-          pattern="\d*"
-          maxlength="19"
-          placeholder="Enter card number"
-          aria-label="creditNumber"
-        />
-        <input
-          name="cc-cvc"
-          class="cvv"
-          type="tel"
-          pattern="\d*"
-          maxlength="4"
-          placeholder="Enter CVV"
-          aria-label="cvvNumber"
-        />
-        <button type="submit" class="btn pay-btn">Pay</button>
-      </form>
     </div>
-
     <script src="index.js" type="module"></script>
   </body>
 </html>

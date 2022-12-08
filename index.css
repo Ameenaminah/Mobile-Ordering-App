@@ -1,4 +1,6 @@
-* {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
@@ -6,34 +8,41 @@ body {
   margin: 0;
   font-family: "Smythe", cursive;
   font-style: normal;
-  font-weight: 400;
-  line-height: 1.6;
+  line-height: 1.5;
   min-height: 100vh;
-  max-width: 100%;
+  background-color: #f5f5f5;
 }
 
+.container {
+  /* min-width: 250px; */
+  background-color: #fff;
+  margin: 0 auto;
+  min-width: 250px;
+  max-width: 600px;
+}
 .header-container {
   background-image: url(ferks-guare-KEZdWfYD-ow-unsplash\ 1.png);
   background-size: cover;
-  background-position: right;
-  max-width: 100%;
-  display: flex;
-  flex-direction: column;
-  min-height: 100px;
-  color: rgba(255, 255, 255, 0.75);
   background-color: #393333;
+  width: 100%;
+  padding: 0;
+  color: #fdc32f;
+  text-shadow: 1px 1px 3px wheat;
+  display: flex;
+  height: 200px;
+  align-items: center;
 }
 .intro {
-  padding: 1em;
+  padding: 2em;
 }
 .intro-title {
-  font-size: 2.4375rem;
-  line-height: 24px;
+  font-size: 3rem;
+  margin: 0;
 }
 
 .intro-subtitle {
-  font-size: 1.40135rem;
-  line-height: 14px;
+  font-size: 1.5rem;
+  margin: 0;
 }
 
 /* =======================
@@ -43,7 +52,7 @@ body {
 .items {
   max-width: 90%;
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-between;
   align-items: center;
   letter-spacing: -0.02em;
   border-bottom: 1px solid #d2d2d2;
@@ -51,57 +60,69 @@ body {
   margin: 0 auto;
 }
 .item-img {
-  font-size: 4.92rem;
-  line-height: 98px;
+  font-size: 5rem;
 }
 .item-details {
-  margin-left: 2em;
+  margin-left: 4em;
   text-align: left;
 }
 .item-title {
   font-size: 1.75rem;
-  line-height: 17px;
   margin-bottom: 0;
   color: #000000;
 }
 .item-ingredients {
-  font-size: 1rem;
-  line-height: 24px;
+  font-size: 1.2rem;
   color: #8b8b8b;
 }
 .item-price {
-  font-size: 1.25rem;
-  line-height: 24px;
+  font-size: 1.5rem;
   color: #000000;
 }
 .item-btn {
   font-weight: 200;
   font-size: 2rem;
-  line-height: 24px;
   border: 1.5px solid #dedede;
   border-radius: 50%;
   width: 50px;
   text-align: center;
   margin-left: 6em;
   color: #3c3c3c;
+  background-color: #ffffff;
+  cursor: pointer;
+}
+.item-btn:active {
+  box-shadow: inset 1.5px 1.5px 5px -1.5px rgba(0, 0, 0, 0.7);
+}
+.item-btn:hover {
+  background-color: #f4f4f4;
 }
 
 /* =======================
             order
 ========================== */
-
-.order-container {
-  max-width: 100%;
-  font-size: 1.75rem;
-  line-height: 17px;
-  color: #000000;
-  text-align: center;
+.hidden {
   display: none;
+}
+.order-container {
+  width: 95%;
+  font-size: 1.75rem;
+  color: #000000;
+  margin: 0 auto;
 }
 .order-list {
   display: flex;
-  justify-content: space-evenly;
+  flex-direction: row;
+  justify-content: space-between;
   margin-bottom: 1em;
+}
+.ordered-items {
+  max-width: 90%;
+  margin: 0 auto;
+}
+
+.order-title {
+  text-align: center;
 }
 
 .order-total {
@@ -109,14 +130,15 @@ body {
   max-width: 90%;
   margin: 0 auto;
 }
+.remove-item-btn {
+  border: none;
+  background-color: #fff;
+  color: #bbbbbb;
+  margin-left: 0.3em;
+  padding: 0.5em;
+  cursor: pointer;
+}
 
-.item-container {
-  display: block;
-}
-.item-total {
-  color: #0e0e0e;
-  line-height: 24px;
-}
 span {
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   font-style: normal;
@@ -131,15 +153,15 @@ span {
   border-radius: 3px;
   width: 90%;
   height: 60px;
-  margin: 0 auto;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   font-style: normal;
   font-weight: 700;
-  font-size: 1rem;
-  line-height: 24px;
+  font-size: 1.5rem;
   color: rgba(255, 255, 255, 0.75);
   border: none;
-  margin: 2em 0;
+  display: block;
+  margin: 2em auto;
+  cursor: pointer;
 }
 
 /* =======================
@@ -154,7 +176,6 @@ span {
   bottom: 0;
   margin: auto;
   background: #ffffff;
-  border-radius: 3.88991px;
   text-align: center;
   width: 524px;
   height: 500px;
@@ -162,17 +183,19 @@ span {
   font-style: normal;
   font-weight: 700;
   font-size: 1.5em;
-  line-height: 31px;
+  width: 524px;
+  height: 542px;
+  border-radius: 4px;
+  box-shadow: 5px 5px 255px #000000;
   display: none;
 }
-input,
-pay-btn {
+input {
   max-width: 90%;
   display: block;
   margin: 1em auto;
-  width: 475.91px;
+  width: 500px;
   height: 71.3px;
-  border: 1.29664px solid #757575;
+  border: 2px solid #757575;
   border-radius: 3.88991px;
   padding-left: 1.5em;
 }
@@ -181,9 +204,12 @@ pay-btn {
             Media QUery
 ========================== */
 
-@media (min-width: 600px) {
+@media (min-width: 800px) {
+  .container {
+    width: 90%;
+  }
   .header-container {
-    height: 400px;
+    height: 300px;
   }
   .intro {
     padding: 6em;

@@ -1,52 +1,53 @@
 import { menuArray } from "./data.js";
-let orders = [];
-const orderList = document.getElementById("order-list");
-const orderContainer = document.querySelector(".order-container");
+let orderArray = [];
+let totalPrice = 0;
+
 document.addEventListener("click", function (e) {
-  if (e.target.dataset.btn) {
-    // orderContainer.style.display = "block";
-    addOrder(e.target.dataset.btn);
+  if (e.target.dataset.add) {
+    renderOrder(e.target.dataset.add);
   }
 });
 
-function addOrder(items) {
-  const targetItem = menuArray.filter(function (item) {
-    return item.id === items;
-  })[0];
-  console.log(targetItem.id);
-
-  if (targetItem) {
-    console.log(targetItem);
+function renderOrder(itemId) {
+  if (orderArray) {
+    document.getElementById("order-container").classList.remove("hidden");
   }
+  document.getElementById("ordered-items").innerHTML = getOrderHtml(itemId);
+  document.getElementById("total-price").textContent =
+    "$" + getTotalPrice(itemId);
 }
 
-// let orderItems = "";
-// if (targetTweetObj) {
-//   orderItems += `
-//       <li class="order-list">
-//             <h2 class="item-title">${targetTweetObj.name} <span>remove</span></h2>
-//             <p class="item-price">$${targetTweetObj.price}</p>
-//           </li>
+function addItemToOrder(itemId) {
+  const targetItemObj = menuArray.filter(function (item) {
+    return item.id == itemId;
+  })[0];
+  orderArray.push(targetItemObj);
+}
+function getTotalPrice() {
+  orderArray.forEach(function (item) {
+    totalPrice += item.price;
+  });
+  return totalPrice;
+}
 
-//     `;
-// }
-// // orders.push({ name: "Pizza", price: 14 });
-// // let orderItems = "";
-// // for (let item of orders) {
-// //   orderItems += `
-// //     <li class="order-list">
-// //           <h2 class="item-title">${item.name} <span>remove</span></h2>
-// //           <p class="item-price">$${item.price}</p>
-// //         </li>
+function getOrderHtml(itemId) {
+  addItemToOrder(itemId);
+  let orderHtml = "";
+  orderArray.forEach(function (item) {
+    orderHtml += `
+      <div class="order-list ordered-items">
+        <h2 class="item-title item-total">${item.name} <button class="remove-item-btn" data-remove="${item.id}">remove</button></h2>    
+        <p class="item-price right">$${item.price}</p>
+      </div>
+    `;
+  });
+  return orderHtml;
+}
 
-// //   `;
-// // }
-// orderList.innerHTML = orderItems;
-
-function getHtml() {
-  let html = "";
+function getFeedHtml() {
+  let menuHtml = "";
   menuArray.forEach(function (item) {
-    html += `
+    menuHtml += `
     <div class="items">
         <div class="item-img">
             <p>${item.emoji}</p>
@@ -57,14 +58,16 @@ function getHtml() {
           <p class="item-price"> $${item.price}</p>
         </div>
         <div>
-            <button class="item-btn" data-btn="${item.id}">+</button>
+            <button class="item-btn" data-btn="${item.id}">
+            <i class="fa-solid fa-plus" data-add="${item.id}"></i>
+            </button>
         </div>
     </div>
     `;
   });
-  return html;
+  return menuHtml;
 }
 function render() {
-  document.getElementById("menu").innerHTML = getHtml();
+  document.getElementById("menu").innerHTML += getFeedHtml();
 }
 render();
