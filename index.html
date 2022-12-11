@@ -4,7 +4,8 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- Google font -->
+
+                <!-- ----------Google Font  ---------- -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -17,8 +18,7 @@
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap"
       rel="stylesheet"
     />
-
-    <!-- Fonts awesome -->
+                <!-- ---------- Fonts Awesome ---------- -->
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
@@ -26,21 +26,26 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
+
     <title>Ordering App</title>
     <link rel="stylesheet" href="index.css" />
   </head>
   <body>
     <div class="container">
+                  <!-- ---------- Header ---------- -->
       <header class="header-container">
         <div class="intro">
           <h1 class="intro-title">Jimmy’s Diner</h1>
           <p class="intro-subtitle">The best burgers and pizzas in town.</p>
         </div>
       </header>
+      
       <main id="main">
+                          <!-- ---------- Menu ---------- -->
         <div class="menu" id="menu">
-          <!-- Main content / menu -->
         </div>
+
+                    <!-- ---------- Order container ---------- -->
         <div class="order-container hidden" id="order-container">
           <div class="order" id="order">
             <h3 class="order-title">Your order</h3>
@@ -52,22 +57,61 @@
               <h2 class="item-title item-total">Total price:</h2>
               <p class="item-price" id="total-price"></p>
             </div>
-            <button class="btn purchase-btn">Complete order</button>
+            <button class="btn complete-btn" id="complete-order-btn">Complete order</button>
           </div>
         </div>
+        <!-- ---------- Ratings container ---------- -->
+        <div class="rating-container hidden">
+          <div class="rating">
+          <h1 class="rating-title">
+          </h1>
+          <div id="star-rating">
+            <div>
+            <span class="star" id="star" aria-required="true">&#9734</span>
+            <span class="star" id="star">&#9734</span>
+            <span class="star" id="star">&#9734</span>
+            <span class="star" id="star">&#9734</span>
+            <span class="star" id="star">&#9734</span>
+          </div>
+          <p class="current-rating">0 of 5</p>
+          <button class=" btn rate-btn " id="rate-btn" type="subtmit">Rate us</button>
+          </div>
+          
+        </div>
+        </div>
       </main>
-      <div class="modal-container">
-        <h2 class="modal-title">Enter card details</h2>
-        <form action="">
+
+              <!-- ---------- Modal container ---------- -->
+      <div class="modal-container hidden " id="modal-container">
+        <div class="payment-info">
+          <p class="payment-title">Shop</p>
+          <p class="payment-title weight">Jimmy's Diner</p>
+       </div>
+       <div class="payment-info">
+          <p class="payment-title">Amount</p>
+          <p class="payment-title weight" id="order-amount"></p>
+        </div>
+        <div class="payment-method">
+          <button class=" btn payment-btn payPal-btn" id="pay-btn">
+            <img class="logo" src="paypal-logo-png-transparent.png" />
+          </button>
+          <button class=" btn payment-btn google-btn" id="pay-btn">
+            <img class="logo google" src="google-pay-logo-png-transparent.png"/>
+          </button>
+          </div>
+          <p class="credit-card-title"><span>Or pay with credit card</span></p>
+        <form action="" class="payment-form" id="payment-form">
           <input
+          class=" modal-input card-name"
             type="text"
-            name="name"
+            name="CustomerName"
             placeholder="Enter your name"
             aria-label="fullname"
             required
           />
-          <input
-            class="cc-number"
+          <div class="card-no">
+            <input
+            class=" modal-input cc-number"
             type="tel"
             name="card-number"
             minlength="16"
@@ -78,16 +122,17 @@
           />
           <input
             name="cc-cvc"
-            class="cvv"
+            class=" modal-input cvv"
             type="tel"
-            length="3"
             minlength="3"
             maxlength="3"
-            placeholder="Enter CVV"
+            placeholder="CVV"
             aria-label="cvvNumber"
             required
           />
-          <button type="submit" class="btn pay-btn">Pay</button>
+          </div>
+          
+          <button type="submit" class="btn pay-btn" id="pay-btn">Pay</button>
         </form>
       </div>
     </div>
