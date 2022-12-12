@@ -114,8 +114,6 @@ body {
   color: #3c3c3c;
   background-color: #ffffff;
   cursor: pointer;
-  justify-self: flex-start;
-  margin-left: auto;
 }
 .item-btn:active {
   box-shadow: inset 1.5px 1.5px 5px -1.5px rgba(0, 0, 0, 0.7);
@@ -385,4 +383,10 @@ body {
   .modal-input {
     padding: 1em;
   }
+}
+
+.button-group {
+  display: flex;
+  gap: 20px;
+  margin-left: auto;
 }

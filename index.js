@@ -18,14 +18,16 @@ let count = 0;
 
 document.addEventListener("click", function (e) {
   if (e.target.dataset.add) {
-    renderOrder(e.target.dataset.add);
-    // add();
+    addOrder(+e.target.dataset.add);
+  } else if (e.target.dataset.minus) {
+    removeOrder(+e.target.dataset.minus);
   } else if (e.target.id === "complete-order-btn") {
     showModalContainer();
   } else if (e.target.id === "rate-btn") {
     feedbackMessage();
   }
 });
+
 paymentForm.addEventListener("submit", paymentBtnOption);
 
 allStars.forEach((star, i) => {
@@ -44,12 +46,27 @@ allStars.forEach((star, i) => {
 
 // ---------- EventListeners Functions ----------
 
-function renderOrder(itemId) {
-  // if (orderArray.length > 0) {
-  //   orderContainer.classList.remove("hidden");
-  // }
-  orderContainer.classList.remove("hidden");
-  document.getElementById("ordered-items").innerHTML = getOrderHtml(itemId);
+function addOrder(itemId) {
+  addItemToOrder(itemId);
+
+  if (orderArray.length > 0) {
+    orderContainer.classList.remove("hidden");
+  }
+
+  document.getElementById("ordered-items").innerHTML = getOrderHtml();
+  document.getElementById("total-price").textContent = "$" + getTotalPrice();
+}
+
+function removeOrder(itemId) {
+  removeItemFromOrder(itemId);
+
+  console.log("orderArray => ", orderArray)
+  if (orderArray.length <= 0) {
+    orderContainer.classList.add("hidden");
+    return;
+  }
+
+  document.getElementById("ordered-items").innerHTML = getOrderHtml();
   document.getElementById("total-price").textContent = "$" + getTotalPrice();
 }
 
@@ -89,14 +106,49 @@ function feedbackMessage() {
 // ---------- Add item to the order and render order ----------
 
 function addItemToOrder(itemId) {
-  const targetItemObj = menuArray.filter(function (item) {
-    return item.id == itemId;
-  })[0];
-  orderArray.push(targetItemObj);
+  const targetFilteredItems = menuArray.filter((item) => item.id === itemId);
+  if (isArrayNullOrEmpty(targetFilteredItems)) {
+    return;
+  }
+
+  const currentOrderLines = orderArray.filter((item) => item.id === itemId);
+
+  if (isArrayNullOrEmpty(currentOrderLines)) {
+    orderArray.push({ id: itemId, count: 1, price: targetFilteredItems[0].price });
+    return;
+  }
+
+  const currentOrderLine = currentOrderLines[0];
+  orderArray = orderArray.filter((item) => item.id !== itemId);
+  orderArray.push({ id: itemId, count: currentOrderLine.count + 1, price: targetFilteredItems[0].price });
 }
 
-function getOrderHtml(itemId) {
-  addItemToOrder(itemId);
+function removeItemFromOrder(itemId) {
+  const targetFilteredItems = menuArray.filter((item) => item.id === itemId);
+  if (isArrayNullOrEmpty(targetFilteredItems)) {
+    return;
+  }
+
+  const currentOrderLines = orderArray.filter((item) => item.id === itemId);
+
+  if (isArrayNullOrEmpty(currentOrderLines)) {
+    return;
+  }
+
+  const currentOrderLine = currentOrderLines[0];
+  orderArray = orderArray.filter((item) => item.id !== itemId);
+
+  if(currentOrderLine.count > 1){
+    orderArray.push({ id: itemId, count: currentOrderLine.count - 1, price: targetFilteredItems[0].price });
+  }
+}
+
+function isArrayNullOrEmpty(array) {
+  return !array || array.length === 0;
+}
+
+function getOrderHtml() {
+  
   let orderHtml = "";
   // const newItemsArray = orderArray.map((item) => [item.id, item]);
   // const newMap = new Map(newItemsArray);
@@ -112,20 +164,30 @@ function getOrderHtml(itemId) {
   //   `;
   //   });
   // }
-  orderArray.forEach((item) => {
+  orderArray.forEach((orderItem) => {
+    const targetFilteredItems = menuArray.filter(item => item.id === orderItem.id);
+    if(isArrayNullOrEmpty(targetFilteredItems)) {
+      // don't render anything
+      return;
+    }
+
+    const targetFilteredItem = targetFilteredItems[0];
+    
     orderHtml += `
     <div class="order-list ordered-items">
-      <h2 class="item-title item-total">${item.name} <button class="remove-item-btn" data-remove="${item.id}">remove</button></h2>
-      <p class="item-price right">$${item.price}</p>
+      <h2 class="item-title item-total">${targetFilteredItem.name} <button class="remove-item-btn" data-remove="${targetFilteredItem.id}">remove</button></h2>
+      <p class="item-price right">$${targetFilteredItem.price} <span>(x ${orderItem.count})</span></p>
     </div>
     `;
   });
+
   return orderHtml;
 }
+
 function getTotalPrice() {
   totalPrice = 0;
   orderArray.forEach(function (item) {
-    totalPrice += item.price;
+    totalPrice += (item.price * item.count);
   });
   return totalPrice;
 }
@@ -142,15 +204,22 @@ function getFeedHtml() {
           <p class="item-ingredients"> ${item.ingredients}</p>
           <p class="item-price"> $${item.price}</p>
         </div>
-        <button class="item-btn" data-btn="${item.id}">
+        <div class="button-group">
+          <button class="item-btn" data-btn="${item.id}">
+            <i class="fa-solid fa-minus" data-minus="${item.id}"></i>
+          </button>
+          <button class="item-btn" data-btn="${item.id}">
             <i class="fa-solid fa-plus" data-add="${item.id}"></i>
-            </button>
+          </button>
+        </div>
     </div>
     `;
   });
   return menuHtml;
 }
+
 function renderMenu() {
   document.getElementById("menu").innerHTML += getFeedHtml();
 }
+
 renderMenu();
