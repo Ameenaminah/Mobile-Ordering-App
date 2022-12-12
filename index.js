@@ -204,10 +204,10 @@ function getFeedHtml() {
           <p class="item-price"> $${item.price}</p>
         </div>
         <div class="button-group">
-          <button class="item-btn" data-btn="${item.id}">
+          <button class="item-btn" data-minus="${item.id}">
             <i class="fa-solid fa-minus" data-minus="${item.id}"></i>
           </button>
-          <button class="item-btn" data-btn="${item.id}">
+          <button class="item-btn" data-add="${item.id}">
             <i class="fa-solid fa-plus" data-add="${item.id}"></i>
           </button>
         </div>
