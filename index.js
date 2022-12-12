@@ -60,7 +60,7 @@ function addOrder(itemId) {
 function removeOrder(itemId) {
   removeItemFromOrder(itemId);
 
-  console.log("orderArray => ", orderArray)
+  // console.log("orderArray => ", orderArray);
   if (orderArray.length <= 0) {
     orderContainer.classList.add("hidden");
     return;
@@ -89,7 +89,7 @@ function paymentBtnOption(e) {
     document.querySelector(
       ".rating-title"
     ).innerHTML = `<h1>Thanks, ${name}! your order is on its way!</h1>`;
-  }, 3000);
+  }, 2000);
 }
 function feedbackMessage() {
   starRating.innerHTML = `<p class="current-rating">Thanks for your feedback!</p>`;
@@ -114,13 +114,21 @@ function addItemToOrder(itemId) {
   const currentOrderLines = orderArray.filter((item) => item.id === itemId);
 
   if (isArrayNullOrEmpty(currentOrderLines)) {
-    orderArray.push({ id: itemId, count: 1, price: targetFilteredItems[0].price });
+    orderArray.push({
+      id: itemId,
+      count: 1,
+      price: targetFilteredItems[0].price,
+    });
     return;
   }
 
   const currentOrderLine = currentOrderLines[0];
   orderArray = orderArray.filter((item) => item.id !== itemId);
-  orderArray.push({ id: itemId, count: currentOrderLine.count + 1, price: targetFilteredItems[0].price });
+  orderArray.push({
+    id: itemId,
+    count: currentOrderLine.count + 1,
+    price: targetFilteredItems[0].price,
+  });
 }
 
 function removeItemFromOrder(itemId) {
@@ -138,8 +146,12 @@ function removeItemFromOrder(itemId) {
   const currentOrderLine = currentOrderLines[0];
   orderArray = orderArray.filter((item) => item.id !== itemId);
 
-  if(currentOrderLine.count > 1){
-    orderArray.push({ id: itemId, count: currentOrderLine.count - 1, price: targetFilteredItems[0].price });
+  if (currentOrderLine.count > 1) {
+    orderArray.push({
+      id: itemId,
+      count: currentOrderLine.count - 1,
+      price: targetFilteredItems[0].price,
+    });
   }
 }
 
@@ -148,34 +160,21 @@ function isArrayNullOrEmpty(array) {
 }
 
 function getOrderHtml() {
-  
   let orderHtml = "";
-  // const newItemsArray = orderArray.map((item) => [item.id, item]);
-  // const newMap = new Map(newItemsArray);
-  // const iterator = newMap.values();
-  // const uniqueItems = [...iterator];
-  // if (uniqueItems.length > 0) {
-  //   uniqueItems.forEach((item) => {
-  //     orderHtml += `
-  //       <div class="order-list ordered-items">
-  //        <h2 class="item-title item-total">${item.name} <button class="remove-item-btn" data-remove="${item.id}">remove</button></h2>
-  //        <p class="item-price right">() $${item.price}</p>
-  //       </div>
-  //   `;
-  //   });
-  // }
   orderArray.forEach((orderItem) => {
-    const targetFilteredItems = menuArray.filter(item => item.id === orderItem.id);
-    if(isArrayNullOrEmpty(targetFilteredItems)) {
+    const targetFilteredItems = menuArray.filter(
+      (item) => item.id === orderItem.id
+    );
+    if (isArrayNullOrEmpty(targetFilteredItems)) {
       // don't render anything
       return;
     }
 
     const targetFilteredItem = targetFilteredItems[0];
-    
+    // <button class="remove-item-btn" data-remove="${targetFilteredItem.id}">remove</button>
     orderHtml += `
     <div class="order-list ordered-items">
-      <h2 class="item-title item-total">${targetFilteredItem.name} <button class="remove-item-btn" data-remove="${targetFilteredItem.id}">remove</button></h2>
+      <h2 class="item-title item-total">${targetFilteredItem.name}</h2>
       <p class="item-price right">$${targetFilteredItem.price} <span>(x ${orderItem.count})</span></p>
     </div>
     `;
@@ -187,7 +186,7 @@ function getOrderHtml() {
 function getTotalPrice() {
   totalPrice = 0;
   orderArray.forEach(function (item) {
-    totalPrice += (item.price * item.count);
+    totalPrice += item.price * item.count;
   });
   return totalPrice;
 }
@@ -201,7 +200,7 @@ function getFeedHtml() {
         <span class="item-emoji">${item.emoji}</span>
         <div class="item-details">
           <h2 class="item-title">${item.name}</h2>
-          <p class="item-ingredients"> ${item.ingredients}</p>
+          <p class="item-ingredients"> ${item.ingredients.join(", ")}</p>
           <p class="item-price"> $${item.price}</p>
         </div>
         <div class="button-group">
